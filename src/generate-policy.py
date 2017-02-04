@@ -18,8 +18,7 @@ policy_template = """
             "Sid": "Stmt1486065689000",
             "Effect": "Allow",
             "Action": [
-%s
-                "iam:PassRole"
+%s                "iam:PassRole"
             ],
             "Resource": [
                 "*"
@@ -93,15 +92,14 @@ def generate_policy(actions):
     for v in new_map.values():
         for action in v:
             stringified_actions = stringified_actions + '                "' + action + '",\n'
-    stringified_actions = stringified_actions[:-2]
     policy = policy_template % (stringified_actions)
     return policy
 
 
 if __name__ == '__main__':
-    if len(sys.argv) >= 2 
+    if len(sys.argv) >= 2:
         clouddriver_dir = sys.argv[1]
-    elif os.environ.get('CLOUDDRIVER_AWS_DIR', None)  
+    elif os.environ.get('CLOUDDRIVER_AWS_DIR', None):  
         clouddriver_dir = os.environ['CLOUDDRIVER_AWS_DIR']
     else:
         print("Usage:\n\t generate_policy.py <CLOUDDRIVER_AWS_DIR>")
