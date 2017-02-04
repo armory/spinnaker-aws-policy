@@ -29,11 +29,13 @@ policy_template = """
 }
 """
 
+
 def format(s):
     formatted = set()
     for x in s:
         formatted.add(x.title().replace("-", ""))
     return formatted
+
 
 action_map = {
     "ec2" : format(ec2.actions),
@@ -52,6 +54,7 @@ def actions_of(request):
             if a.lower() in request.lower():
                 actions.add(k + ":" + a)
     return actions
+
 
 def requests_in(filename):
     requested_action = set()
