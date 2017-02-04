@@ -1,0 +1,33 @@
+#!/usr/bin/env python3
+
+actions = {
+    "add-tags",
+    "create-listener",
+    "create-load-balancer",
+    "create-rule",
+    "create-target-group",
+    "delete-listener",
+    "delete-load-balancer",
+    "delete-rule",
+    "delete-target-group",
+    "deregister-targets",
+    "describe-listeners",
+    "describe-load-balancer-attributes",
+    "describe-load-balancers",
+    "describe-rules",
+    "describe-ssl-policies",
+    "describe-tags",
+    "describe-target-group-attributes",
+    "describe-target-groups",
+    "describe-target-health",
+    "modify-listener",
+    "modify-load-balancer-attributes",
+    "modify-rule",
+    "modify-target-group",
+    "modify-target-group-attributes",
+    "register-targets",
+    "remove-tags",
+    "set-rule-priorities",
+    "set-security-groups",
+    "set-subnets"
+}

@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+actions = {
+    "add-tags",
+    "apply-security-groups-to-load-balancer",
+    "attach-load-balancer-to-subnets",
+    "configure-health-check",
+    "create-app-cookie-stickiness-policy",
+    "create-lb-cookie-stickiness-policy",
+    "create-load-balancer",
+    "create-load-balancer-listeners",
+    "create-load-balancer-policy",
+    "delete-load-balancer",
+    "delete-load-balancer-listeners",
+    "delete-load-balancer-policy",
+    "deregister-instances-from-load-balancer",
+    "describe-instance-health",
+    "describe-load-balancer-attributes",
+    "describe-load-balancer-policies",
+    "describe-load-balancer-policy-types",
+    "describe-load-balancers",
+    "describe-tags",
+    "detach-load-balancer-from-subnets",
+    "disable-availability-zones-for-load-balancer",
+    "enable-availability-zones-for-load-balancer",
+    "modify-load-balancer-attributes",
+    "register-instances-with-load-balancer",
+    "remove-tags",
+    "set-load-balancer-listener-ssl-certificate",
+    "set-load-balancer-policies-for-backend-server",
+    "set-load-balancer-policies-of-listener"
+}
