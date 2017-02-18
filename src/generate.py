@@ -50,6 +50,15 @@ def _parse_actions(filename):
     requested_action = set()
     imports = defaultdict(set)
 
+    def imported(k, v):
+        if imports.get(k) and "*" in imports[k]:
+            return True
+        else:
+            for i in imports.get(k, {}):
+                if v in i:
+                    return True
+        return False
+
     def import_handler(resource):
         import_path = resource.split('.')
         if len(import_path) >= 6:
@@ -58,13 +67,14 @@ def _parse_actions(filename):
             if resource.endswith(";"):
                 resource = resource[:-1]
             if import_path[1] == "amazonaws" and collection in _action_map.keys():
-                imports[collection].add(resource)
+                imports[collection].add(resource.lower())
 
     def action_handler(resource):
         actions = set()
         for k, v in _action_map.items():
             for a in v:
-                if a.lower() in resource.lower():
+                if a.lower() in resource.lower() and imported(k, a.lower()):
+                    # if a.lower() in resource.lower():
                     actions.add(k + ":" + a)
         requested_action.update(actions)
 
@@ -78,14 +88,13 @@ def _parse_actions(filename):
     with open(filename, 'r') as f:
         for line in f:
             handle(line)
-    print(imports)
     return requested_action
 
 
 def _get_actions(clouddriver_aws_dir):
     actions = set()
 
-    def could_contain_requests(abs_path):
+    def could_contain_actions(abs_path):
         groovy = abs_path.endswith(".groovy")
         java = abs_path.endswith(".java")
         return java or groovy
@@ -93,7 +102,7 @@ def _get_actions(clouddriver_aws_dir):
     for root, dirs, files in os.walk(clouddriver_aws_dir):
         for file in files:
             abs_path = root + os.sep + file
-            if could_contain_requests(abs_path):
+            if could_contain_actions(abs_path):
                 actions.update(_parse_actions(abs_path))
     return actions
 
