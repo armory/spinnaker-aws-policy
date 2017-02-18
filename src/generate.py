@@ -8,7 +8,7 @@ import cloudwatch
 import os
 import sys
 import iam
-
+from collections import defaultdict
 
 policy_template = """
 {
@@ -29,60 +29,79 @@ policy_template = """
 """
 
 
-def format(s):
+def _format(s):
     formatted = set()
     for x in s:
         formatted.add(x.title().replace("-", ""))
     return formatted
 
 
-action_map = {
-    "ec2": format(ec2.actions),
-    "elasticloadbalancing": format(elb.actions),
-    "elasticloadbalancingv2": format(elbv2.actions),
-    "autoscaling": format(autoscaling.actions),
-    "iam": format(iam.actions),
-    "cloudwatch": format(cloudwatch.actions)
+_action_map = {
+    "ec2": _format(ec2.actions),
+    "elasticloadbalancing": _format(elb.actions),
+    "elasticloadbalancingv2": _format(elbv2.actions),
+    "autoscaling": _format(autoscaling.actions),
+    "iam": _format(iam.actions),
+    "cloudwatch": _format(cloudwatch.actions)
 }
 
 
-def actions_of(request):
-    actions = set()
-    for k, v in action_map.items():
-        for a in v:
-            if a.lower() in request.lower():
-                actions.add(k + ":" + a)
-    return actions
-
-
-def requests_in(filename):
+def _parse_actions(filename):
     requested_action = set()
+    imports = defaultdict(set)
+
+    def import_handler(resource):
+        import_path = resource.split('.')
+        if len(import_path) >= 6:
+            collection = import_path[3]
+            resource = import_path[5]
+            if resource.endswith(";"):
+                resource = resource[:-1]
+            if import_path[1] == "amazonaws" and collection in _action_map.keys():
+                imports[collection].add(resource)
+
+    def action_handler(resource):
+        actions = set()
+        for k, v in _action_map.items():
+            for a in v:
+                if a.lower() in resource.lower():
+                    actions.add(k + ":" + a)
+        requested_action.update(actions)
+
+    def handle(line):
+        if line.startswith("import"):
+            import_handler(line.split()[1])
+        else:
+            for word in line.split():
+                action_handler(word)
+
     with open(filename, 'r') as f:
         for line in f:
-            for word in line.split():
-                requested_action = requested_action.union(actions_of(word))
+            handle(line)
+    print(imports)
     return requested_action
 
 
-def aws_actions(clouddriver_aws_dir):
+def _get_actions(clouddriver_aws_dir):
     actions = set()
 
     def could_contain_requests(abs_path):
         groovy = abs_path.endswith(".groovy")
         java = abs_path.endswith(".java")
         return java or groovy
+
     for root, dirs, files in os.walk(clouddriver_aws_dir):
         for file in files:
             abs_path = root + os.sep + file
             if could_contain_requests(abs_path):
-                actions = actions.union(requests_in(abs_path))
+                actions.update(_parse_actions(abs_path))
     return actions
 
 
-def generate_policy(actions):
-    print(actions)
+def policy(clouddriver_aws_dir):
+    actions = _get_actions(clouddriver_aws_dir)
     new_map = {}
-    for k, v in action_map.items():
+    for k, v in _action_map.items():
         new_map[k] = set()
         for action in actions:
             if action.startswith(k):
@@ -104,6 +123,6 @@ if __name__ == '__main__':
     elif os.environ.get('CLOUDDRIVER_AWS_DIR', None):
         clouddriver_dir = os.environ['CLOUDDRIVER_AWS_DIR']
     else:
-        print("Usage:\n\t generate_policy.py <CLOUDDRIVER_AWS_DIR>\n")
+        print("Usage:\n\t policy.py <CLOUDDRIVER_AWS_DIR>\n")
         sys.exit(1)
-    print(generate_policy(aws_actions(clouddriver_dir)))
+    print(policy(clouddriver_dir))

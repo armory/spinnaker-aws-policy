@@ -66,7 +66,6 @@ actions = {
     "get-ssh-public-key",
     "get-user",
     "get-user-policy",
-    "help",
     "list-access-keys",
     "list-account-aliases",
     "list-attached-group-policies",
