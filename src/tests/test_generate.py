@@ -3,13 +3,15 @@
 import unittest
 import generate
 import json
+import os
 
 
 class TestGeneratePolicy(unittest.TestCase):
 
     def test_all(self):
+        dir_path = os.path.dirname(os.path.realpath(__file__))
         json_policy = json.loads(generate.policy(
-            "/Users/Andrew/armory/spinnaker-aws-policy/src/tests/clouddriver-aws/"))
+            dir_path + "/clouddriver-aws/"))
         expected = {
             "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
             "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",

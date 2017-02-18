@@ -36,6 +36,7 @@ def _format(s):
     return formatted
 
 
+# TODO(andrewbackes): Figure out a way to pull the API calls from boto3.
 _action_map = {
     "ec2": _format(ec2.actions),
     "elasticloadbalancing": _format(elb.actions),
@@ -47,6 +48,9 @@ _action_map = {
 
 
 def _parse_actions(filename):
+    """Run through the file looking for imported AWS libraries. Then look
+    for calls from that library.
+    """
     requested_action = set()
     imports = defaultdict(set)
 
@@ -74,7 +78,6 @@ def _parse_actions(filename):
         for k, v in _action_map.items():
             for a in v:
                 if a.lower() in resource.lower() and imported(k, a.lower()):
-                    # if a.lower() in resource.lower():
                     actions.add(k + ":" + a)
         requested_action.update(actions)
 
@@ -92,6 +95,9 @@ def _parse_actions(filename):
 
 
 def _get_actions(clouddriver_aws_dir):
+    """Walk the clouddriver-aws directory looking for java/groovy files that use
+    the AWS SDK. From there analyse which AWS API calls are made.
+    """
     actions = set()
 
     def could_contain_actions(abs_path):
@@ -108,6 +114,9 @@ def _get_actions(clouddriver_aws_dir):
 
 
 def policy(clouddriver_aws_dir):
+    """Generate a valid AWS IAM Policy with close to minimal permissions needed
+    by the codebase.
+    """
     actions = _get_actions(clouddriver_aws_dir)
     new_map = {}
     for k, v in _action_map.items():
