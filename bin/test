@@ -6,6 +6,7 @@ mkdir -p build
 BUILD_DOCKERFILE=build/tester.Dockerfile
 cat <<EOT > $BUILD_DOCKERFILE
 FROM python:3.6
+RUN pip3 install nose
 EOT
 
 IMAGE=spinnaker-aws-policy:tester
