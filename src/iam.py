@@ -113,6 +113,5 @@ actions = {
     "update-user",
     "upload-server-certificate",
     "upload-signing-certificate",
-    "upload-ssh-public-key",
-    "wait"
+    "upload-ssh-public-key"
 }

@@ -16,6 +16,8 @@ The policy will be printed to stdout. It will contain all of the necessary actio
 
 The generator searches the clouddriver codebase for calls to the AWS API. It maps any API calls to their required permissions.
 
+_Note:_ The method for generating the policy is imperfect, but considered 'good enough'.
+
 ## Rosco
 
 The policy that Spinnaker's Rosco requires is a bit different. Since Rosco uses Packer, you can consult HashiCorp's recommendation [here](https://www.packer.io/docs/builders/amazon.html).
