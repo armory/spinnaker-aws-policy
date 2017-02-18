@@ -5,7 +5,7 @@
 
 To generate an AWS Policy for Spinnaker Clouddriver:
 
-    Run `src/generate-policy.py <CLOUDDRIVER_AWS_DIRECTORY>`
+    Run `src/generate.py <CLOUDDRIVER_AWS_DIRECTORY>`
 
 where `<CLOUDDRIVER_AWS_DIRECTORY>` is the location on disk of the clouddriver github repo checked out to which ever version you want to generate the policy for.
 
@@ -18,4 +18,4 @@ The generator searches the clouddriver codebase for calls to the AWS API. It map
 
 ## Rosco
 
-The policy that Spinnaker's Rosco requires is a bit different. Since Rosco uses Packer, you can consult HashiCorp has their recommendation for Packer [here](https://www.packer.io/docs/builders/amazon.html).
+The policy that Spinnaker's Rosco requires is a bit different. Since Rosco uses Packer, you can consult HashiCorp's recommendation [here](https://www.packer.io/docs/builders/amazon.html).
