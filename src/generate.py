@@ -118,19 +118,20 @@ def policy(clouddriver_aws_dir):
     by the codebase.
     """
     actions = _get_actions(clouddriver_aws_dir)
-    new_map = {}
-    for k, v in _action_map.items():
-        new_map[k] = set()
-        for action in actions:
-            if action.startswith(k):
-                new_map[k].add(action)
-        if len(new_map[k]) == len(v):
-            new_map[k] = {k + ":*"}
-    stringified_actions = ""
-    for v in set(new_map.values()):
-        for action in v:
-            stringified_actions = stringified_actions + \
-                '                "' + action + '",\n'
+    # formatted_actions = set()
+    # for k, v in _action_map.items():
+    #    new_map[k] = set()
+    #    for action in actions:
+    #        if action.startswith(k):
+    #            new_map[k].add(action)
+    #    if len(new_map[k]) == len(v):
+    #        new_map[k] = {k + ":*"}
+    # for k, v in actions.items():
+    #    formatted_actions.add("%s:%s" % (k, v))
+    stringified_actions = ''
+    for action in sorted(actions):
+        stringified_actions = stringified_actions + \
+            '                "' + action + '",\n'
     policy = policy_template % (stringified_actions)
     return policy
 
