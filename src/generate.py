@@ -127,7 +127,7 @@ def policy(clouddriver_aws_dir):
         if len(new_map[k]) == len(v):
             new_map[k] = {k + ":*"}
     stringified_actions = ""
-    for v in new_map.values():
+    for v in set(new_map.values()):
         for action in v:
             stringified_actions = stringified_actions + \
                 '                "' + action + '",\n'
