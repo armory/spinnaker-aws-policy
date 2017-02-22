@@ -47,6 +47,12 @@ _action_map = {
 }
 
 
+def _format_permission(collection, action):
+    if collection == "elasticloadbalancingv2":
+        return "elasticloadbalancing:%s" % action
+    return "%s:%s" % (collection, action)
+
+
 def _parse_actions(filename):
     """Run through the file looking for imported AWS libraries. Then look
     for calls from that library.
@@ -78,7 +84,7 @@ def _parse_actions(filename):
         for k, v in _action_map.items():
             for a in v:
                 if a.lower() in resource.lower() and imported(k, a.lower()):
-                    actions.add(k + ":" + a)
+                    actions.add(_format_permission(k, a))
         requested_action.update(actions)
 
     def handle(line):
