@@ -15,8 +15,8 @@ class TestGeneratePolicy(unittest.TestCase):
         expected = {
             "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
             "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
-            "elasticloadbalancingv2:RegisterTargets",
-            "elasticloadbalancingv2:DeregisterTargets",
+            "elasticloadbalancing:RegisterTargets",
+            "elasticloadbalancing:DeregisterTargets",
             "ec2:DescribeRegions",
             "ec2:DescribeAvailabilityZones",
             "ec2:DescribeSecurityGroups",
