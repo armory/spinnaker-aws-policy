@@ -3,7 +3,16 @@
 
 ## Clouddriver
 
-To generate an AWS Policy for Spinnaker Clouddriver:
+To generate an AWS Policy for the current head of Spinnaker Clouddriver:
+
+    ./bin/build
+    ./bin/run
+
+The policy will be printed to stdout. It will contain all of the necessary actions for Spinnaker's Clouddriver to operate. If you wish, you can isolate any of the actions to certain resources by modifying the policy after it is generated.
+
+### Running Locally
+
+If you have a checkout of Clouddriver locally and want to generate the policy for it you can run the python script directly on your development system:
 
     Run `src/generate.py <CLOUDDRIVER_AWS_DIRECTORY>`
 
