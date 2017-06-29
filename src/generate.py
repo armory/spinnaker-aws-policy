@@ -42,7 +42,7 @@ _action_map = {
     "elasticloadbalancing": _format(elb.actions),
     "elasticloadbalancingv2": _format(elbv2.actions),
     "autoscaling": _format(autoscaling.actions),
-    "iam": _format(iam.actions),
+    "identitymanagement": _format(iam.actions),
     "cloudwatch": _format(cloudwatch.actions)
 }
 
