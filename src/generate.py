@@ -42,7 +42,7 @@ _action_map = {
     "elasticloadbalancing": _format(elb.actions),
     "elasticloadbalancingv2": _format(elbv2.actions),
     "autoscaling": _format(autoscaling.actions),
-    "iam": _format(iam.actions),
+    "identitymanagement": _format(iam.actions),
     "cloudwatch": _format(cloudwatch.actions)
 }
 
@@ -50,6 +50,8 @@ _action_map = {
 def _format_permission(collection, action):
     if collection == "elasticloadbalancingv2":
         return "elasticloadbalancing:%s" % action
+    if collection == "identitymanagement":
+        return "iam:%s" % action
     return "%s:%s" % (collection, action)
 
 
