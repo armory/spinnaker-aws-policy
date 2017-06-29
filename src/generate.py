@@ -50,6 +50,8 @@ _action_map = {
 def _format_permission(collection, action):
     if collection == "elasticloadbalancingv2":
         return "elasticloadbalancing:%s" % action
+    if collection == "identitymanagement":
+        return "iam:%s" % action
     return "%s:%s" % (collection, action)
 
 
