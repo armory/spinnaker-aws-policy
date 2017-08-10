@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+cd "$(dirname "$0")"/..
+# Push standard image
+docker push "${DOCKER_IMAGE}"
+if [ "$BRANCH_NAME" == "master" ]; then
+    #creates latest tag
+    BRANCH_TAG="${DOCKER_REGISTRY}/${GIT_REPO}"
+    docker tag "${DOCKER_IMAGE}" "${BRANCH_TAG}"
+    docker push "${BRANCH_TAG}"
+fi

@@ -15,7 +15,7 @@ The policy will be printed to stdout. It will contain all of the necessary actio
 
 Using multiple AWS accounts requires creating multiple roles with different polices. One role will be in the account Spinnaker resides and the other will be in account Spinnaker is deploying to.
 
-If you have multiple AWS accounts, you will need to create two roles with different policies. One role is for the AWS account that Spinnaker resides in while the other roles are in the accounts that Spinnaker deploys to. 
+If you have multiple AWS accounts, you will need to create two roles with different policies. One role is for the AWS account that Spinnaker resides in while the other roles are in the accounts that Spinnaker deploys to.
 
 **Managing Account**
 

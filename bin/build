@@ -1,6 +1,0 @@
-#!/bin/bash -x
-set -e
-cd "$(dirname "$0")"/..
-
-IMAGE=spinnaker-aws-policy:runner
-docker build -t ${IMAGE} -f Dockerfile .

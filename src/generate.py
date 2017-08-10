@@ -140,6 +140,6 @@ if __name__ == '__main__':
     elif os.environ.get('CLOUDDRIVER_AWS_DIR', None):
         clouddriver_dir = os.environ['CLOUDDRIVER_AWS_DIR']
     else:
-        print("Usage:\n\t policy.py <CLOUDDRIVER_AWS_DIR>\n")
+        print("Usage:\n\t generate.py <CLOUDDRIVER_AWS_DIR>\n")
         sys.exit(1)
     print(policy(clouddriver_dir))

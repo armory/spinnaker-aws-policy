@@ -4,8 +4,10 @@ cd "$(dirname "$0")"/..
 
 mkdir -p build
 BUILD_DOCKERFILE=build/tester.Dockerfile
+
+dockerfile=$(cat ./Dockerfile)
 cat <<EOT > $BUILD_DOCKERFILE
-FROM python:3.6
+${dockerfile}
 RUN pip3 install nose
 EOT
 
@@ -15,7 +17,12 @@ docker build -t ${IMAGE} -f ${BUILD_DOCKERFILE} .
 rm ${BUILD_DOCKERFILE}
 
 docker run --rm \
+    -i -t \
     -v "$(pwd)/src:/armory/src" \
     --workdir=/armory \
     ${IMAGE} \
-    nosetests -v
+    nosetests \
+      --logging-clear-handlers  \
+      --nocapture \
+      --logging-level=INFO \
+      -v $@
