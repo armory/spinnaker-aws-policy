@@ -1,11 +1,15 @@
-#!/bin/bash
+#!/bin/bash -x
 set -e
 cd "$(dirname "$0")"/..
 # Push standard image
-docker push "${DOCKER_IMAGE}"
+DOCKER_REGISTRY=docker.io/armory
+GIT_HASH=$(git rev-parse HEAD | cut -c -7)
+IMAGE="${DOCKER_REGISTRY}/spinnaker-aws-policy"
+IMAGE_TAG=${IMAGE}:${GIT_HASH}
+docker push ${IMAGE_TAG}
+
 if [ "$BRANCH_NAME" == "master" ]; then
     #creates latest tag
-    BRANCH_TAG="${DOCKER_REGISTRY}/${GIT_REPO}"
-    docker tag "${DOCKER_IMAGE}" "${BRANCH_TAG}"
-    docker push "${BRANCH_TAG}"
+    docker tag ${IMAGE_TAG} ${IMAGE}
+    docker push ${IMAGE}
 fi
