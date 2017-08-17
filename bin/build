@@ -1,5 +1,8 @@
 #!/bin/bash -x
 set -e
 cd "$(dirname "$0")"/..
-IMAGE=spinnaker-aws-policy:runner
-docker build -t ${IMAGE} -f Dockerfile .
+DOCKER_REGISTRY=docker.io/armory
+GIT_HASH=$(git rev-parse HEAD | cut -c -7)
+IMAGE="${DOCKER_REGISTRY}/spinnaker-aws-policy"
+IMAGE_TAG=${IMAGE}:${GIT_HASH}
+docker build -t ${IMAGE_TAG} -f Dockerfile .
