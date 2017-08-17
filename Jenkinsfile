@@ -1,6 +1,14 @@
 node {
     checkout scm
-    stage("Test") {
-        sh('bin/test')
+    stage("Build & Test") {
+      sh('''
+        ./bin/build
+        ./bin/test
+      ''')
+    }
+    stage("Push") {
+      sh('''
+        ./bin/push
+      ''')
     }
 }
