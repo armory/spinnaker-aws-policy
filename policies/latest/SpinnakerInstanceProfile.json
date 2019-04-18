@@ -30,6 +30,8 @@
                 "autoscaling:SuspendProcesses",
                 "autoscaling:TerminateInstanceInAutoScalingGroup",
                 "autoscaling:UpdateAutoScalingGroup",
+                "cloudformation:DescribeStacks",
+                "cloudformation:DescribeStackEvents",
                 "cloudwatch:DeleteAlarms",
                 "cloudwatch:DescribeAlarms",
                 "cloudwatch:GetMetricStatistics",
