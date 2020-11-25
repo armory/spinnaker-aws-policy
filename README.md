@@ -19,7 +19,7 @@ If you have multiple AWS accounts, you will need to create two roles with differ
 
 **Managing Account**
 
-The 'Managing Account' is the account that Spinnaker itself runs in. Since most of the work that Spinnaker does is in the deploy target's account the following is the minumum set of permissions you need for this role:
+The 'Managing Account' is the account that Spinnaker itself runs in. Since most of the work that Spinnaker does is in the deploy target's account the following is the minimum set of permissions you need for this role:
 
 ```
 {
