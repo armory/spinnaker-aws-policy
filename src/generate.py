@@ -8,6 +8,7 @@ import cloudwatch
 import os
 import sys
 import iam
+import awslambda
 from collections import defaultdict
 
 policy_template = """
@@ -43,7 +44,8 @@ _action_map = {
     "elasticloadbalancingv2": _format(elbv2.actions),
     "autoscaling": _format(autoscaling.actions),
     "identitymanagement": _format(iam.actions),
-    "cloudwatch": _format(cloudwatch.actions)
+    "cloudwatch": _format(cloudwatch.actions),
+    "lambda": _format(awslambda.actions)
 }
 
 
