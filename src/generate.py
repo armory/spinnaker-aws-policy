@@ -113,7 +113,8 @@ def _get_actions(clouddriver_aws_dir):
     def could_contain_actions(abs_path):
         groovy = abs_path.endswith(".groovy")
         java = abs_path.endswith(".java")
-        return java or groovy
+        kotlin = abs_path.endswith(".kt")
+        return java or groovy or kotlin
 
     for root, dirs, files in os.walk(clouddriver_aws_dir):
         for file in files:
