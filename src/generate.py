@@ -8,6 +8,7 @@ import cloudwatch
 import os
 import sys
 import iam
+import awslambda
 from collections import defaultdict
 
 policy_template = """
@@ -43,7 +44,8 @@ _action_map = {
     "elasticloadbalancingv2": _format(elbv2.actions),
     "autoscaling": _format(autoscaling.actions),
     "identitymanagement": _format(iam.actions),
-    "cloudwatch": _format(cloudwatch.actions)
+    "cloudwatch": _format(cloudwatch.actions),
+    "lambda": _format(awslambda.actions)
 }
 
 
@@ -111,7 +113,8 @@ def _get_actions(clouddriver_aws_dir):
     def could_contain_actions(abs_path):
         groovy = abs_path.endswith(".groovy")
         java = abs_path.endswith(".java")
-        return java or groovy
+        kotlin = abs_path.endswith(".kt")
+        return java or groovy or kotlin
 
     for root, dirs, files in os.walk(clouddriver_aws_dir):
         for file in files:

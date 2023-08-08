@@ -21,6 +21,7 @@ class TestGeneratePolicy(unittest.TestCase):
             "ec2:DescribeAvailabilityZones",
             "ec2:DescribeSecurityGroups",
             "ec2:DescribeVpcs",
+            "lambda:DeleteFunction",
             "iam:PassRole"
         }
         self.assertEquals(expected, set(json_policy['Statement'][0]['Action']))
