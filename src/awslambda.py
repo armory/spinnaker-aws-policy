@@ -64,7 +64,5 @@ actions = {
     "update-function-code",
     "update-function-configuration",
     "update-function-event-invoke-config",
-    "update-function-url-config",
-    "wait",
-    "wizard"
+    "update-function-url-config"
 }
